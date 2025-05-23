@@ -32,14 +32,25 @@ async def startup_event():
     # Инициализация БД
     init_db()
 
+
+    ## ------------------------------------------------
+
     # Очистка и создание папок
+    # перенести все данные из файлов( сгенерить щаново патч в бд в таблицу)
+
     os.makedirs(TASKS_DIR, exist_ok=True)
     os.makedirs(SUBMISSIONS_DIR, exist_ok=True)
+
+
+
+
     for file in glob.glob(f"{TASKS_DIR}/*.json"):
         os.remove(file)
     for file in glob.glob(f"{SUBMISSIONS_DIR}/*.json"):
         os.remove(file)
     print("[CLEANUP] tasks/ и submissions/ очищены")
+
+    ## ------------------------------------------------
 
     # Запуск планировщика
     start_scheduler()
@@ -75,6 +86,7 @@ async def get_task(team: str = Depends(verify_token)):
         content = await f.read()
     return {"filename": latest, "content": content}
 
+
 @app.post("/submit")
 async def submit(file: UploadFile = File(...), team: str = Depends(verify_token)):
     db = SessionLocal()
@@ -88,3 +100,52 @@ async def submit(file: UploadFile = File(...), team: str = Depends(verify_token)
     db.add(sub)
     db.commit()
     return {"status": "received"}
+
+
+прмиерные ручки и что они делают
+
+1) /task по вебсокету отдает выданные в работу таски + в теле
+
+пример response
+```json
+[
+{
+    "taskId": 1,
+    "solutions" : [
+        "team1": "statusTeamSolutin",
+        "team2": "statusTeamSolutin",
+    ]
+}
+]
+```
+
+2) /teams/count по вебсоркету считает кол-во команд которые онлайн сейчас
+пример response
+```json
+{
+    "count": 3,
+}
+```
+
+3) /solution [POST] отправка решения
+пример request
+```json
+{
+    "teatmId":  тут айди команды от которой идет задача,
+    "taskId": 1,
+    "answer" : text,
+}
+```
+
+response
+```json
+{
+    OK (либо ошибку если будет???)
+}
+```
+
+4) /teams/login [POST]
+то что вы сделали для получения токена
+
+
+// ЕЩЕ РАЗ МЫ НЕ РАБОТАМ С ФАЙЛАМИ ВСЕ ХРАНИМ В БД

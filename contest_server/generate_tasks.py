@@ -20,3 +20,6 @@ for i in range(1, 51):
         json.dump(task, f, ensure_ascii=False, indent=2)
 
 print("[OK] Сгенерировано 50 заданий в папке:", TASKS_DIR)
+
+
+// убрать , патч в бд заменит его

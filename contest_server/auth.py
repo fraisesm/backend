@@ -4,13 +4,15 @@ from jose import jwt, JWTError
 import time
 
 SECRET_KEY = "supersecretkey"
+LiVE_TIME = 86400
+
 ALGORITHM = "HS256"
 security = HTTPBearer()
 
 def create_token(name: str):
     payload = {
         "sub": name,
-        "exp": time.time() + 86400
+        "exp": time.time() + LiVE_TIME
     }
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 

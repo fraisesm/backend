@@ -6,4 +6,8 @@ engine = create_engine("sqlite:///contest.db", connect_args={"check_same_thread"
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def init_db():
+    ## проверка что у тебя нет таблиц
+    ## иначе скип
+    // нужно написать  sql скрипт( патч) для заполнения стартовыми данными моей таблицы таск так что бы данные
+    были похожи на настоящие
     Base.metadata.create_all(bind=engine) # type: ignore

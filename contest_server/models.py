@@ -24,3 +24,35 @@ class Submission(Base):
     task_file = Column(String)
     submission_file = Column(String)
     received_at = Column(DateTime)
+
+    // опционально
+    token:
+        - teamId
+        - token(hash)
+        - expiretAt
+    //
+
+
+
+
+    team:
+        - id
+        - name (str)
+        - token(hash)
+        - createAt (time)
+
+    task:
+        - id
+        - name (string)
+        - content (string)
+        - answer (string)
+        - isSend (bool)
+        - createdAt (time)
+
+    submission:
+        - id
+        - teamId
+        - taskId
+        - content(answer) (stinrg)
+        - status (string)
+        - createdAt (time)
