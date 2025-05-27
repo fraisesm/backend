@@ -1,0 +1,26 @@
+{
+  "task_type": "segmentation",
+  "description": "Perform semantic segmentation on the image",
+  "input_data": {
+    "image_url": "https://example.com/images/scene_6426.jpg",
+    "image_size": [
+      768,
+      768
+    ],
+    "format": "RGB"
+  },
+  "constraints": {
+    "max_processing_time": 2.1409581850746733,
+    "min_accuracy": 0.75,
+    "classes": [
+      "sky",
+      "building",
+      "background"
+    ]
+  },
+  "task_id": 15,
+  "difficulty": 4,
+  "max_attempts": 3,
+  "time_limit": 48,
+  "memory_limit": 1014
+}

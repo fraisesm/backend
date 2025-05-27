@@ -1,0 +1,30 @@
+{
+  "image_id": "det_77b0ea29",
+  "image_url": "https://storage.googleapis.com/dataset/images/detection_042.jpg",
+  "metadata": {
+    "timestamp": "2024-01-04T12:00:00",
+    "location": {
+      "latitude": 55.7558,
+      "longitude": 37.6173
+    },
+    "weather": "sunny",
+    "time_of_day": "evening",
+    "camera": "Urban Scanner HD"
+  },
+  "image_properties": {
+    "width": 2560,
+    "height": 1440,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "scene_context": {
+    "environment": "industrial",
+    "lighting": "daylight",
+    "weather_conditions": "sunny",
+    "traffic_density": "medium"
+  },
+  "bbox_format": {
+    "coordinate_system": "top_left",
+    "units": "pixels"
+  }
+}

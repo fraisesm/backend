@@ -1,0 +1,30 @@
+{
+  "image_id": "cls_1455a368",
+  "image_url": "https://storage.googleapis.com/dataset/images/classification_033.jpg",
+  "metadata": {
+    "timestamp": "2024-01-03T18:00:00",
+    "camera": "Nikon D850",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "format": "JPEG",
+    "size_bytes": 3654571
+  },
+  "preprocessing": {
+    "resize": [
+      224,
+      224
+    ],
+    "normalize": true,
+    "color_space": "RGB",
+    "augmentation": {
+      "horizontal_flip": true,
+      "rotation_range": 24,
+      "brightness_range": [
+        0.8,
+        1.2
+      ]
+    }
+  }
+}

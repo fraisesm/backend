@@ -1,0 +1,30 @@
+{
+  "image_id": "cls_bef0241b",
+  "image_url": "https://storage.googleapis.com/dataset/images/classification_035.jpg",
+  "metadata": {
+    "timestamp": "2024-01-03T22:00:00",
+    "camera": "Sony A7 III",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "format": "JPEG",
+    "size_bytes": 3554088
+  },
+  "preprocessing": {
+    "resize": [
+      512,
+      512
+    ],
+    "normalize": true,
+    "color_space": "RGB",
+    "augmentation": {
+      "horizontal_flip": true,
+      "rotation_range": 30,
+      "brightness_range": [
+        0.8,
+        1.2
+      ]
+    }
+  }
+}

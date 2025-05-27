@@ -1,0 +1,3 @@
+"""
+AI Contest Server package
+""" 

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -7,52 +7,34 @@ Base = declarative_base()
 class Team(Base):
     __tablename__ = "teams"
     id = Column(Integer, primary_key=True)
-    name = Column(String, unique=True)
-    token = Column(String)
-    last_seen = Column(DateTime, default=datetime.utcnow)
+    name = Column(String(50), unique=True, nullable=False)
+    token = Column(String(256), nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    last_seen = Column(DateTime)
 
 class Task(Base):
     __tablename__ = "tasks"
     id = Column(Integer, primary_key=True)
-    filename = Column(String)
+    name = Column(String(100), nullable=False)
+    content = Column(Text, nullable=False)
+    answer = Column(Text)
+    is_sent = Column(Boolean, default=False, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     issued_at = Column(DateTime)
+
+class User(Base):
+    __tablename__ = "users"
+    
+    id = Column(Integer, primary_key=True)
+    connection_id = Column(String, unique=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 class Submission(Base):
     __tablename__ = "submissions"
+    
     id = Column(Integer, primary_key=True)
-    team_name = Column(String)
-    task_file = Column(String)
-    submission_file = Column(String)
-    received_at = Column(DateTime)
-
-    // опционально
-    token:
-        - teamId
-        - token(hash)
-        - expiretAt
-    //
-
-
-
-
-    team:
-        - id
-        - name (str)
-        - token(hash)
-        - createAt (time)
-
-    task:
-        - id
-        - name (string)
-        - content (string)
-        - answer (string)
-        - isSend (bool)
-        - createdAt (time)
-
-    submission:
-        - id
-        - teamId
-        - taskId
-        - content(answer) (stinrg)
-        - status (string)
-        - createdAt (time)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    task_id = Column(Integer, nullable=False)
+    solution = Column(String, nullable=False)  # JSON строка с решением
+    submitted_at = Column(DateTime, default=datetime.utcnow)
+    score = Column(Integer, nullable=True)  # Оценка решения (если применимо)

@@ -1,0 +1,27 @@
+{
+  "task_type": "classification",
+  "description": "Classify the objects in the image",
+  "input_data": {
+    "image_url": "https://example.com/images/task_9605.jpg",
+    "image_size": [
+      224,
+      224
+    ],
+    "format": "RGB"
+  },
+  "constraints": {
+    "max_processing_time": 0.7592729796157613,
+    "min_confidence": 0.7,
+    "available_classes": [
+      "cat",
+      "dog",
+      "building",
+      "tree"
+    ]
+  },
+  "task_id": 26,
+  "difficulty": 3,
+  "max_attempts": 3,
+  "time_limit": 62,
+  "memory_limit": 711
+}

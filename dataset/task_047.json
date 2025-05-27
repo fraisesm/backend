@@ -1,0 +1,26 @@
+{
+  "task_type": "object_detection",
+  "description": "Detect and locate objects in the image",
+  "input_data": {
+    "image_url": "https://example.com/images/scene_3401.jpg",
+    "image_size": [
+      1024,
+      768
+    ],
+    "format": "RGB"
+  },
+  "constraints": {
+    "max_processing_time": 2.5552308497057963,
+    "min_confidence": 0.8,
+    "min_iou": 0.5,
+    "target_objects": [
+      "bicycle",
+      "person"
+    ]
+  },
+  "task_id": 47,
+  "difficulty": 2,
+  "max_attempts": 3,
+  "time_limit": 114,
+  "memory_limit": 1126
+}

@@ -1,0 +1,28 @@
+{
+  "task_type": "segmentation",
+  "description": "Perform semantic segmentation on the image",
+  "input_data": {
+    "image_url": "https://example.com/images/scene_9008.jpg",
+    "image_size": [
+      1024,
+      1024
+    ],
+    "format": "RGB"
+  },
+  "constraints": {
+    "max_processing_time": 2.3709053476257855,
+    "min_accuracy": 0.75,
+    "classes": [
+      "person",
+      "sidewalk",
+      "vegetation",
+      "car",
+      "road"
+    ]
+  },
+  "task_id": 9,
+  "difficulty": 4,
+  "max_attempts": 3,
+  "time_limit": 72,
+  "memory_limit": 635
+}

@@ -1,0 +1,30 @@
+{
+  "image_id": "det_6d8fedf3",
+  "image_url": "https://storage.googleapis.com/dataset/images/detection_036.jpg",
+  "metadata": {
+    "timestamp": "2024-01-04T00:00:00",
+    "location": {
+      "latitude": 55.0084,
+      "longitude": 82.9357
+    },
+    "weather": "clear",
+    "time_of_day": "morning",
+    "camera": "Traffic Camera X-200"
+  },
+  "image_properties": {
+    "width": 1920,
+    "height": 1440,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "scene_context": {
+    "environment": "industrial",
+    "lighting": "mixed",
+    "weather_conditions": "overcast",
+    "traffic_density": "medium"
+  },
+  "bbox_format": {
+    "coordinate_system": "top_left",
+    "units": "pixels"
+  }
+}

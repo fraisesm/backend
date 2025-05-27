@@ -1,0 +1,37 @@
+{
+  "image_id": "kpt_e0deb833",
+  "image_url": "https://storage.googleapis.com/dataset/images/keypoint_021.jpg",
+  "metadata": {
+    "timestamp": "2024-01-02T18:00:00",
+    "camera": "Azure Kinect DK",
+    "capture_type": "RGB-D",
+    "subject_distance_meters": 2.7,
+    "session_id": "session_04"
+  },
+  "image_properties": {
+    "width": 1920,
+    "height": 720,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "depth_data": {
+    "available": true,
+    "format": "uint16",
+    "units": "millimeters",
+    "min_depth": 436,
+    "max_depth": 4088,
+    "frame_aligned": true
+  },
+  "keypoint_format": {
+    "coordinate_system": "image_coordinates",
+    "origin": "top_left",
+    "units": "pixels",
+    "skeleton_format": "COCO"
+  },
+  "capture_conditions": {
+    "lighting": "studio",
+    "background": "green_screen",
+    "occlusion": "minimal",
+    "motion_blur": "none"
+  }
+}

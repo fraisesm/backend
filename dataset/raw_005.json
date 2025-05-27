@@ -1,0 +1,43 @@
+{
+  "image_id": "seg_c57bdc13",
+  "image_url": "https://storage.googleapis.com/dataset/images/segmentation_004.jpg",
+  "metadata": {
+    "timestamp": "2024-01-01T08:00:00",
+    "satellite": "GeoEye-1",
+    "bands": [
+      "RGB",
+      "NIR",
+      "SWIR"
+    ],
+    "cloud_coverage": 0.06,
+    "resolution_meters": 30,
+    "acquisition_date": "2024-01-05"
+  },
+  "image_properties": {
+    "width": 8192,
+    "height": 8192,
+    "channels": 3,
+    "format": "GeoTIFF"
+  },
+  "geographic_info": {
+    "projection": "EPSG:4326",
+    "bounds": {
+      "north": 56.8489,
+      "south": 56.828900000000004,
+      "east": 60.6157,
+      "west": 60.5957
+    },
+    "pixel_size": [
+      30,
+      30
+    ]
+  },
+  "mask_format": {
+    "encoding": "rle",
+    "size": [
+      8192,
+      8192
+    ],
+    "classes_expected": 5
+  }
+}
