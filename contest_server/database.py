@@ -75,20 +75,21 @@ class Submission(Base):
         return f"<Submission(id={self.id}, team_id={self.team_id}, task_id={self.task_id}, status='{self.status}')>"
 
 # Настройка подключения к БД
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///contest.db")
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./contest.db")
 
+# Создаем движок SQLAlchemy
 engine = create_engine(
     DATABASE_URL,
-    connect_args={'check_same_thread': False} if DATABASE_URL.startswith('sqlite') else {},
-    echo=os.getenv("SQL_ECHO", "false").lower() == "true",
-    pool_size=5,
-    max_overflow=10
+    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {},
 )
 
+# Создаем фабрику сессий
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def get_db():
-    """Получение сессии базы данных"""
+    """
+    Генератор для получения сессии базы данных
+    """
     db = SessionLocal()
     try:
         yield db
@@ -98,64 +99,34 @@ def get_db():
 def init_db(add_test_data: bool = False):
     """
     Инициализация базы данных
-    :param add_test_data: Флаг добавления тестовых данных
+    :param add_test_data: Добавлять ли тестовые данные
     """
-    try:
-        # Создаем все таблицы
-        Base.metadata.create_all(bind=engine)
-        logger.info("Database tables created successfully")
-        
-        if add_test_data:
-            db = SessionLocal()
-            try:
-                if not db.query(Team).first():
-                    # Создаем тестовые команды
-                    teams = [
-                        Team(
-                            name='Team Alpha',
-                            token='token_alpha',
-                            last_seen=datetime.utcnow(),
-                            is_active=True
-                        ),
-                        Team(
-                            name='Team Beta',
-                            token='token_beta',
-                            last_seen=datetime.utcnow(),
-                            is_active=True
-                        )
-                    ]
-                    
-                    # Создаем тестовые задачи с разной сложностью
-                    tasks = []
-                    for i in range(1, 6):
-                        tasks.append(Task(
-                            name=f'Task {i}',
-                            content=json.dumps({
-                                'description': f'Test task {i}',
-                                'constraints': {
-                                    'time_limit': 1000,  # ms
-                                    'memory_limit': 256  # MB
-                                }
-                            }),
-                            answer=json.dumps({'selections': []}),
-                            created_at=datetime.utcnow(),
-                            difficulty=i,
-                            max_attempts=3
-                        ))
-                    
-                    db.add_all(teams + tasks)
-                    db.commit()
-                    logger.info('Test data added successfully')
-            except Exception as e:
-                db.rollback()
-                logger.error(f'Error adding test data: {e}')
-                raise
-            finally:
-                db.close()
-                
-    except Exception as e:
-        logger.error(f'Database initialization error: {e}')
-        raise
+    from contest_server.models import Base, Task
+    
+    Base.metadata.create_all(bind=engine)
+    
+    if add_test_data:
+        db = SessionLocal()
+        try:
+            # Проверяем, есть ли уже задачи в базе
+            if db.query(Task).count() == 0:
+                # Добавляем тестовые задачи
+                test_tasks = [
+                    Task(
+                        name="Тестовая задача 1",
+                        description="Описание тестовой задачи 1",
+                        content="Содержание тестовой задачи 1"
+                    ),
+                    Task(
+                        name="Тестовая задача 2",
+                        description="Описание тестовой задачи 2",
+                        content="Содержание тестовой задачи 2"
+                    )
+                ]
+                db.add_all(test_tasks)
+                db.commit()
+        finally:
+            db.close()
 
 def validate_submission(db: SessionLocal, team_id: int, task_id: int) -> Optional[str]:
     """

@@ -8,8 +8,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_
 import json
 from typing import Optional
-from database import SessionLocal, Task
-from websocket import ws_manager
+from contest_server.database import SessionLocal, Task
+from contest_server.websocket import ws_manager
 
 # Настройка логирования
 logging.basicConfig(
@@ -29,67 +29,38 @@ async def issue_task() -> Optional[Task]:
     """
     db = SessionLocal()
     try:
-        # Проверяем количество уже выданных задач
-        issued_count = db.query(Task).filter(Task.is_sent == True).count()
-        if issued_count >= MAX_TASKS:
-            logger.info(f"Достигнут лимит выданных задач ({MAX_TASKS})")
-            return None
-
-        # Получаем первое невыданное задание, отсортированное по ID
+        # Получаем следующее доступное задание
         task = db.query(Task).filter(
             and_(
-                Task.is_sent == False,  # Задание еще не выдано
-                Task.created_at <= datetime.utcnow()  # Время выдачи наступило
+                Task.is_sent == False,  # type: ignore
+                Task.created_at <= datetime.utcnow()
             )
-        ).order_by(Task.id).first()
-
-        if not task:
-            logger.info("Все доступные задания уже выданы")
-            return None
-
-        # Помечаем задание как выданное
-        task.is_sent = True
-        task.issued_at = datetime.utcnow()
-        db.commit()
-
-        # Формируем сообщение о новом задании
-        task_message = {
-            "type": "new_task",
-            "data": {
-                "task_id": task.id,
-                "name": task.name,
-                "content": json.loads(task.content),
-                "difficulty": task.difficulty,
-                "max_attempts": task.max_attempts,
-                "issued_at": task.issued_at.isoformat(),
-                "remaining_tasks": MAX_TASKS - (issued_count + 1)
-            }
-        }
-
-        # Отправляем уведомление всем подключенным командам
-        await ws_manager.broadcast(json.dumps(task_message))
+        ).first()
         
-        # Отправляем обновленный список всех доступных заданий
-        await broadcast_available_tasks(db)
+        if task:
+            task.is_sent = True
+            task.issued_at = datetime.utcnow()
+            db.commit()
+            
+            # Отправляем задание всем подключенным клиентам
+            await ws_manager.broadcast(
+                json.dumps({
+                    "type": "new_task",
+                    "task": {
+                        "id": task.id,
+                        "content": task.content
+                    }
+                })
+            )
+            
+            logger.info(f"Выдано задание {task.id}")
+            return task
+            
+        return None
         
-        logger.info(f"Выдано задание: {task.name} (ID: {task.id}). Осталось задач: {MAX_TASKS - (issued_count + 1)}")
-        
-        # Если это последнее задание, отправляем уведомление
-        if issued_count + 1 >= MAX_TASKS:
-            await ws_manager.broadcast(json.dumps({
-                "type": "contest_status",
-                "data": {
-                    "status": "completed",
-                    "message": "Все задания выданы",
-                    "timestamp": datetime.utcnow().isoformat()
-                }
-            }))
-        
-        return task
-
     except Exception as e:
-        db.rollback()
         logger.error(f"Ошибка при выдаче задания: {str(e)}")
+        db.rollback()
         return None
     finally:
         db.close()
@@ -129,23 +100,11 @@ async def broadcast_available_tasks(db: Session):
     except Exception as e:
         logger.error(f"Ошибка при отправке списка доступных заданий: {str(e)}")
 
-def start_scheduler(interval_seconds: int = TASK_INTERVAL):
+def start_scheduler():
     """
     Запускает планировщик выдачи заданий
-    :param interval_seconds: Интервал между выдачей заданий в секундах
     """
-    try:
-        scheduler = AsyncIOScheduler()
-        scheduler.add_job(
-            issue_task, 
-            "interval", 
-            seconds=interval_seconds,
-            max_instances=1,  # Предотвращаем параллельное выполнение
-            coalesce=True    # Пропускаем пропущенные запуски
-        )
-        scheduler.start()
-        logger.info(f"Планировщик запущен с интервалом {interval_seconds} секунд. "
-                   f"Максимальное количество задач: {MAX_TASKS}")
-    except Exception as e:
-        logger.error(f"Ошибка при запуске планировщика: {str(e)}")
-        raise
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(issue_task, 'interval', seconds=TASK_INTERVAL)
+    scheduler.start()
+    logger.info("Планировщик запущен")

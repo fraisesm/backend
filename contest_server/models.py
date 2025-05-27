@@ -1,26 +1,42 @@
-from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, Enum, ForeignKey, Text
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.sql import func
 from datetime import datetime
+import enum
 
 Base = declarative_base()
 
+class SolutionStatus(enum.Enum):
+    PENDING = "pending"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    PROCESSING = "processing"
+
 class Team(Base):
-    __tablename__ = "teams"
-    id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True, nullable=False)
-    token = Column(String(256), nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    last_seen = Column(DateTime)
+    __tablename__ = "team"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), unique=True, index=True, nullable=False)
+    userId = Column(String(50), unique=True, index=True, nullable=False)
+    passs = Column(String(256), nullable=False)  # Хранение хеша пароля
+    dateCreate = Column(DateTime, default=func.now(), nullable=False)
+
+class Solution(Base):
+    __tablename__ = "solution"
+
+    solutionId = Column(Integer, primary_key=True, index=True)
+    status = Column(Enum(SolutionStatus), nullable=False, default=SolutionStatus.PENDING)
+    userId = Column(String(50), ForeignKey("team.userId"), nullable=False)
+    text = Column(Text, nullable=False)
+    taskId = Column(Integer, ForeignKey("task.taskId"), nullable=False)
 
 class Task(Base):
-    __tablename__ = "tasks"
-    id = Column(Integer, primary_key=True)
+    __tablename__ = "task"
+
+    taskId = Column(Integer, primary_key=True, index=True)
     name = Column(String(100), nullable=False)
+    description = Column(Text, nullable=False)
     content = Column(Text, nullable=False)
-    answer = Column(Text)
-    is_sent = Column(Boolean, default=False, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    issued_at = Column(DateTime)
 
 class User(Base):
     __tablename__ = "users"

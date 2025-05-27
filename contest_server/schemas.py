@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Dict, Any, Optional, List, Union
 from datetime import datetime
+from enum import Enum
 
 class BoundingBox(BaseModel):
     x: float = Field(..., description="X coordinate of the top-left corner")
@@ -117,4 +118,52 @@ class ExpectedTaskResponse(BaseModel):
     metadata: Optional[Dict[str, Any]] = Field(
         default=None,
         description="Additional metadata about the solution process"
-    ) 
+    )
+
+class SolutionStatus(str, Enum):
+    PENDING = "pending"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    PROCESSING = "processing"
+
+class TeamCreate(BaseModel):
+    name: str = Field(..., min_length=3, max_length=50)
+    password: str = Field(..., min_length=6)
+
+class TeamResponse(BaseModel):
+    name: str
+    userId: str
+    dateCreate: datetime
+
+    class Config:
+        from_attributes = True
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+class TokenData(BaseModel):
+    userId: Optional[str] = None
+
+class SolutionCreate(BaseModel):
+    text: str
+    taskId: int
+
+class SolutionResponse(BaseModel):
+    solutionId: int
+    status: SolutionStatus
+    userId: str
+    text: str
+    taskId: int
+
+    class Config:
+        from_attributes = True
+
+class TaskResponse(BaseModel):
+    taskId: int
+    name: str
+    description: str
+    content: str
+
+    class Config:
+        from_attributes = True 

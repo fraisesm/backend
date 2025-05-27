@@ -4,11 +4,18 @@ from jose import jwt, JWTError
 import time
 from typing import Optional
 import os
+from datetime import datetime, timedelta
+from passlib.context import CryptContext
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.orm import Session
+
+from contest_server.database import get_db
+from contest_server.models import Team
+from contest_server.schemas import TokenData
 
 # Безопасное хранение секретных ключей
-SECRET_KEY = os.getenv("JWT_SECRET_KEY")
-if not SECRET_KEY:
-    raise RuntimeError("JWT_SECRET_KEY environment variable is not set")
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your-secret-key-here")  # Добавляем значение по умолчанию для тестирования
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 часа
 
 LIVE_TIME = 3600  # 1 час в секундах (уменьшено с 24 часов для большей безопасности)
 ALGORITHM = "HS256"
@@ -21,6 +28,15 @@ security = HTTPBearer(
     description="Введите ваш JWT токен в формате: Bearer <token>",
     auto_error=True  # Изменено на True для автоматической обработки ошибок
 )
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password: str) -> str:
+    return pwd_context.hash(password)
 
 def create_token(name: str) -> str:
     """
@@ -101,3 +117,33 @@ def verify_token(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Ошибка проверки токена: {str(e)}"
         )
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> Team:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        userId: str = payload.get("sub")
+        if userId is None:
+            raise credentials_exception
+        token_data = TokenData(userId=userId)
+    except JWTError:
+        raise credentials_exception
+        
+    user = db.query(Team).filter(Team.userId == token_data.userId).first()
+    if user is None:
+        raise credentials_exception
+    return user
