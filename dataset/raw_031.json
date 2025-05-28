@@ -1,0 +1,43 @@
+{
+  "image_id": "seg_f8d200a9",
+  "image_url": "https://storage.googleapis.com/dataset/images/segmentation_030.jpg",
+  "metadata": {
+    "timestamp": "2024-01-03T12:00:00",
+    "satellite": "Sentinel-2",
+    "bands": [
+      "RGB",
+      "NIR",
+      "SWIR"
+    ],
+    "cloud_coverage": 0.05,
+    "resolution_meters": 10,
+    "acquisition_date": "2024-01-31"
+  },
+  "image_properties": {
+    "width": 8192,
+    "height": 8192,
+    "channels": 4,
+    "format": "GeoTIFF"
+  },
+  "geographic_info": {
+    "projection": "EPSG:4326",
+    "bounds": {
+      "north": 55.0184,
+      "south": 54.998400000000004,
+      "east": 82.9457,
+      "west": 82.92569999999999
+    },
+    "pixel_size": [
+      10,
+      10
+    ]
+  },
+  "mask_format": {
+    "encoding": "rle",
+    "size": [
+      8192,
+      8192
+    ],
+    "classes_expected": 10
+  }
+}

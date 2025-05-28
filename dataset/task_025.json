@@ -1,0 +1,26 @@
+{
+  "task_type": "classification",
+  "description": "Classify the objects in the image",
+  "input_data": {
+    "image_url": "https://example.com/images/task_5560.jpg",
+    "image_size": [
+      224,
+      224
+    ],
+    "format": "RGB"
+  },
+  "constraints": {
+    "max_processing_time": 0.7023514606719803,
+    "min_confidence": 0.7,
+    "available_classes": [
+      "person",
+      "dog",
+      "bird"
+    ]
+  },
+  "task_id": 25,
+  "difficulty": 5,
+  "max_attempts": 3,
+  "time_limit": 120,
+  "memory_limit": 1046
+}

@@ -1,0 +1,30 @@
+{
+  "image_id": "cls_9f5ac9f1",
+  "image_url": "https://storage.googleapis.com/dataset/images/classification_046.jpg",
+  "metadata": {
+    "timestamp": "2024-01-04T20:00:00",
+    "camera": "Canon EOS 5D",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "format": "JPEG",
+    "size_bytes": 4642263
+  },
+  "preprocessing": {
+    "resize": [
+      224,
+      224
+    ],
+    "normalize": true,
+    "color_space": "RGB",
+    "augmentation": {
+      "horizontal_flip": true,
+      "rotation_range": 23,
+      "brightness_range": [
+        0.8,
+        1.2
+      ]
+    }
+  }
+}

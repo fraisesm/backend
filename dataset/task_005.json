@@ -1,0 +1,31 @@
+{
+  "task_type": "keypoint_detection",
+  "description": "Detect keypoints on human bodies",
+  "input_data": {
+    "image_url": "https://example.com/images/person_9475.jpg",
+    "image_size": [
+      640,
+      640
+    ],
+    "format": "RGB"
+  },
+  "constraints": {
+    "max_processing_time": 2.965366345418639,
+    "min_confidence": 0.7,
+    "keypoints": [
+      "left_ear",
+      "left_shoulder",
+      "right_shoulder",
+      "right_eye",
+      "nose",
+      "left_eye",
+      "right_ear"
+    ],
+    "max_distance_error": 14
+  },
+  "task_id": 5,
+  "difficulty": 1,
+  "max_attempts": 3,
+  "time_limit": 33,
+  "memory_limit": 792
+}

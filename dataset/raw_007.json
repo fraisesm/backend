@@ -1,0 +1,37 @@
+{
+  "image_id": "kpt_c093415b",
+  "image_url": "https://storage.googleapis.com/dataset/images/keypoint_006.jpg",
+  "metadata": {
+    "timestamp": "2024-01-01T12:00:00",
+    "camera": "Orbbec Astra Pro",
+    "capture_type": "RGB-D",
+    "subject_distance_meters": 2.5,
+    "session_id": "session_01"
+  },
+  "image_properties": {
+    "width": 2560,
+    "height": 1440,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "depth_data": {
+    "available": true,
+    "format": "uint16",
+    "units": "millimeters",
+    "min_depth": 476,
+    "max_depth": 4265,
+    "frame_aligned": true
+  },
+  "keypoint_format": {
+    "coordinate_system": "image_coordinates",
+    "origin": "top_left",
+    "units": "pixels",
+    "skeleton_format": "COCO"
+  },
+  "capture_conditions": {
+    "lighting": "studio",
+    "background": "complex",
+    "occlusion": "minimal",
+    "motion_blur": "slight"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "task_type": "object_detection",
+  "description": "Detect and locate objects in the image",
+  "input_data": {
+    "image_url": "https://example.com/images/scene_3176.jpg",
+    "image_size": [
+      800,
+      600
+    ],
+    "format": "RGB"
+  },
+  "constraints": {
+    "max_processing_time": 2.1725829385966238,
+    "min_confidence": 0.8,
+    "min_iou": 0.5,
+    "target_objects": [
+      "stop_sign",
+      "car",
+      "traffic_light",
+      "motorcycle"
+    ]
+  },
+  "task_id": 35,
+  "difficulty": 4,
+  "max_attempts": 3,
+  "time_limit": 97,
+  "memory_limit": 1108
+}

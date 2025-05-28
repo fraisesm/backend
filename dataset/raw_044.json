@@ -1,0 +1,30 @@
+{
+  "image_id": "cls_3f069d84",
+  "image_url": "https://storage.googleapis.com/dataset/images/classification_043.jpg",
+  "metadata": {
+    "timestamp": "2024-01-04T14:00:00",
+    "camera": "Fujifilm X-T4",
+    "resolution": [
+      1920,
+      1080
+    ],
+    "format": "JPEG",
+    "size_bytes": 2632559
+  },
+  "preprocessing": {
+    "resize": [
+      512,
+      512
+    ],
+    "normalize": true,
+    "color_space": "RGB",
+    "augmentation": {
+      "horizontal_flip": false,
+      "rotation_range": 7,
+      "brightness_range": [
+        0.8,
+        1.2
+      ]
+    }
+  }
+}

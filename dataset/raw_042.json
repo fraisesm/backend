@@ -1,0 +1,37 @@
+{
+  "image_id": "kpt_35d995c1",
+  "image_url": "https://storage.googleapis.com/dataset/images/keypoint_041.jpg",
+  "metadata": {
+    "timestamp": "2024-01-04T10:00:00",
+    "camera": "Kinect v2",
+    "capture_type": "RGB-D",
+    "subject_distance_meters": 2.7,
+    "session_id": "session_08"
+  },
+  "image_properties": {
+    "width": 1920,
+    "height": 720,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "depth_data": {
+    "available": true,
+    "format": "uint16",
+    "units": "millimeters",
+    "min_depth": 581,
+    "max_depth": 4803,
+    "frame_aligned": true
+  },
+  "keypoint_format": {
+    "coordinate_system": "image_coordinates",
+    "origin": "top_left",
+    "units": "pixels",
+    "skeleton_format": "COCO"
+  },
+  "capture_conditions": {
+    "lighting": "studio",
+    "background": "complex",
+    "occlusion": "minimal",
+    "motion_blur": "moderate"
+  }
+}

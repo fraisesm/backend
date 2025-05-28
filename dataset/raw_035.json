@@ -1,0 +1,43 @@
+{
+  "image_id": "seg_83be5afc",
+  "image_url": "https://storage.googleapis.com/dataset/images/segmentation_034.jpg",
+  "metadata": {
+    "timestamp": "2024-01-03T20:00:00",
+    "satellite": "Landsat-8",
+    "bands": [
+      "RGB",
+      "NIR",
+      "SWIR"
+    ],
+    "cloud_coverage": 0.04,
+    "resolution_meters": 10,
+    "acquisition_date": "2024-02-04"
+  },
+  "image_properties": {
+    "width": 2048,
+    "height": 2048,
+    "channels": 8,
+    "format": "GeoTIFF"
+  },
+  "geographic_info": {
+    "projection": "EPSG:4326",
+    "bounds": {
+      "north": 59.9443,
+      "south": 59.9243,
+      "east": 30.345100000000002,
+      "west": 30.3251
+    },
+    "pixel_size": [
+      10,
+      10
+    ]
+  },
+  "mask_format": {
+    "encoding": "rle",
+    "size": [
+      2048,
+      2048
+    ],
+    "classes_expected": 7
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "image_id": "kpt_8e74be1c",
+  "image_url": "https://storage.googleapis.com/dataset/images/keypoint_026.jpg",
+  "metadata": {
+    "timestamp": "2024-01-03T04:00:00",
+    "camera": "Intel RealSense D455",
+    "capture_type": "RGB-D",
+    "subject_distance_meters": 3.9,
+    "session_id": "session_05"
+  },
+  "image_properties": {
+    "width": 2560,
+    "height": 1440,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "depth_data": {
+    "available": true,
+    "format": "uint16",
+    "units": "millimeters",
+    "min_depth": 467,
+    "max_depth": 4332,
+    "frame_aligned": true
+  },
+  "keypoint_format": {
+    "coordinate_system": "image_coordinates",
+    "origin": "top_left",
+    "units": "pixels",
+    "skeleton_format": "COCO"
+  },
+  "capture_conditions": {
+    "lighting": "studio",
+    "background": "green_screen",
+    "occlusion": "minimal",
+    "motion_blur": "slight"
+  }
+}

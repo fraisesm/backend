@@ -1,0 +1,30 @@
+{
+  "image_id": "det_45ed2f0f",
+  "image_url": "https://storage.googleapis.com/dataset/images/detection_015.jpg",
+  "metadata": {
+    "timestamp": "2024-01-02T06:00:00",
+    "location": {
+      "latitude": 55.7558,
+      "longitude": 37.6173
+    },
+    "weather": "sunny",
+    "time_of_day": "night",
+    "camera": "Security Cam Pro"
+  },
+  "image_properties": {
+    "width": 1920,
+    "height": 1080,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "scene_context": {
+    "environment": "rural",
+    "lighting": "daylight",
+    "weather_conditions": "sunny",
+    "traffic_density": "low"
+  },
+  "bbox_format": {
+    "coordinate_system": "top_left",
+    "units": "pixels"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "image_id": "det_dd0c04a2",
+  "image_url": "https://storage.googleapis.com/dataset/images/detection_020.jpg",
+  "metadata": {
+    "timestamp": "2024-01-02T16:00:00",
+    "location": {
+      "latitude": 56.8389,
+      "longitude": 60.6057
+    },
+    "weather": "rainy",
+    "time_of_day": "morning",
+    "camera": "Street Monitor 4K"
+  },
+  "image_properties": {
+    "width": 3840,
+    "height": 2160,
+    "channels": 3,
+    "format": "JPEG"
+  },
+  "scene_context": {
+    "environment": "suburban",
+    "lighting": "mixed",
+    "weather_conditions": "sunny",
+    "traffic_density": "low"
+  },
+  "bbox_format": {
+    "coordinate_system": "top_left",
+    "units": "pixels"
+  }
+}
